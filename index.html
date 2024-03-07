@@ -12,6 +12,7 @@
             font-family: Arial, sans-serif;
             background-color: #2e2e2e;
             color: #fff;
+            overflow: hidden; /* Pour éviter la barre de défilement horizontale */
         }
         #content {
             text-align: center;
@@ -69,6 +70,29 @@
             cursor: pointer;
             z-index: 1001;
         }
+
+        /* Nouveau style pour l'interface en bas */
+        #bottom-interface {
+            position: fixed;
+            bottom: 60px; /* Réglage de la position verticale */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.5); /* Réglage de la transparence */
+            border-radius: 20px;
+            padding: 10px 20px;
+        }
+        #bottom-interface button {
+            background-color: rgba(76, 175, 80, 0.7); /* Réglage de la transparence */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #bottom-interface button:hover {
+            background-color: rgba(76, 175, 80, 0.9); /* Réglage de la transparence */
+        }
     </style>
 </head>
 <body>
@@ -84,6 +108,11 @@
         <p>Découvrez ici les derniers films et les classiques.</p>
         <p>2024 Informations. Tous droits réservés.</p>
         <p>Pour éviter les publicités, nous vous recommandons de télécharger l'extension <a href="https://ublockorigin.com/" target="_blank">uBlock Origin</a>.</p>
+    </div>
+
+    <!-- Interface en bas -->
+    <div id="bottom-interface">
+        <button onclick="window.open('https://guns.lol/GoldoStream', '_blank')">Réseaux</button>
     </div>
 
     <!-- Script de fond de constellations -->
