@@ -34,7 +34,7 @@
             color: #ccc;
         }
         #menu {
-            background-color: #333;
+            background-color: rgba(51, 51, 51, 0.8); /* Ajout d'un fond semi-transparent */
             width: 200px;
             height: 100%;
             position: fixed;
@@ -70,19 +70,17 @@
             cursor: pointer;
             z-index: 1001;
         }
-
-        /* Nouveau style pour l'interface en bas */
         #bottom-interface {
             position: fixed;
-            bottom: 60px; /* Réglage de la position verticale */
+            bottom: 60px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.5); /* Réglage de la transparence */
+            background-color: rgba(0, 0, 0, 0.5);
             border-radius: 20px;
             padding: 10px 20px;
         }
         #bottom-interface button {
-            background-color: rgba(0, 0, 0, 0.8); /* Réglage de la transparence */
+            background-color: rgba(0, 0, 0, 0.8);
             color: white;
             padding: 10px 20px;
             border: none;
@@ -91,31 +89,23 @@
             transition: background-color 0.3s ease;
         }
         #bottom-interface button:hover {
-            background-color: rgba(224, 213, 213, 0.733); /* Réglage de la transparence */
+            background-color: rgba(224, 213, 213, 0.733);
         }
     </style>
 </head>
 <body>
-    <!-- Chargement du menu latéral -->
     <div id="menu">
-        <!-- Le contenu du menu sera chargé ici -->
     </div>
     <div id="menu-toggle">☰</div>
-
-    <!-- Contenu de la page "Informations" -->
     <div id="content">
         <h1>Bienvenue sur notre site de streaming</h1>
         <p>Découvrez ici les derniers films et les classiques.</p>
         <p>2024 Informations. Tous droits réservés.</p>
         <p>Pour éviter les publicités, nous vous recommandons de télécharger l'extension <a href="https://ublockorigin.com/" target="_blank">uBlock Origin</a>.</p>
     </div>
-
-    <!-- Interface en bas -->
     <div id="bottom-interface">
         <button onclick="window.open('https://guns.lol/GoldoStream', '_blank')">Réseaux</button>
     </div>
-
-    <!-- Script de fond de constellations -->
     <script>
         var canvas = document.createElement('canvas');
         var ctx = canvas.getContext('2d');
@@ -196,12 +186,10 @@
             mousePos.y = e.clientY;
         });
     </script>
-
     <script>
         var menuToggle = document.getElementById('menu-toggle');
         var menu = document.getElementById('menu');
 
-        // Chargement du contenu du menu depuis menu.html
         fetch('menu.html')
             .then(response => response.text())
             .then(data => {
@@ -224,7 +212,6 @@
             menu.classList.toggle('active');
         });
 
-        // Ferme le menu lorsque l'utilisateur clique en dehors du menu
         document.addEventListener('click', function(e) {
             if (!menu.contains(e.target) && !menuToggle.contains(e.target)) {
                 menu.classList.remove('active');
