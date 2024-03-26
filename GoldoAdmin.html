@@ -130,102 +130,98 @@
 
 <body>
     <!-- Chargement du menu latéral -->
-    <div id="menu">
-        <!-- Le contenu du menu sera chargé ici -->
-    </div>
-    <div id="menu-toggle">☰</div>
+<div id="menu">
+    <!-- Le contenu du menu sera chargé ici -->
+</div>
+<div id="menu-toggle">☰</div>
 
-    <!-- Script de fond de constellations -->
-    <script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            var canvas = document.createElement('canvas');
-            var ctx = canvas.getContext('2d');
-            var stars = [];
-            var numStars = 300;
-            var maxDistance = 100;
-            var mousePos = { x: 0, y: 0 };
+<!-- Script de fond de constellations -->
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        var stars = [];
+        var numStars = 300;
+        var maxDistance = 100;
+        var mousePos = { x: 0, y: 0 };
 
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            canvas.style.position = 'fixed';
-            canvas.style.top = '0';
-            canvas.style.left = '0';
-            canvas.style.pointerEvents = 'none';
-            canvas.style.zIndex = '-1';
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '-1';
 
-            document.body.appendChild(canvas);
+        document.body.appendChild(canvas);
+
+        for (var i = 0; i < numStars; i++) {
+            var x = Math.random() * canvas.width;
+            var y = Math.random() * canvas.height;
+            var speedX = (Math.random() - 0.5) * 2;
+            var speedY = (Math.random() - 0.5) * 2;
+            stars.push({ x: x, y: y, speedX: speedX, speedY: speedY });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             for (var i = 0; i < numStars; i++) {
-                var x = Math.random() * canvas.width;
-                var y = Math.random() * canvas.height;
-                var speedX = (Math.random() - 0.5) * 2;
-                var speedY = (Math.random() - 0.5) * 2;
-                stars.push({ x: x, y: y, speedX: speedX, speedY: speedY });
-            }
+                var star = stars[i];
+                star.x += star.speedX;
+                star.y += star.speedY;
 
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                if (star.x < 0 || star.x > canvas.width) star.speedX = -star.speedX;
+                if (star.y < 0 || star.y > canvas.height) star.speedY = -star.speedY;
 
-                for (var i = 0; i < numStars; i++) {
-                    var star = stars[i];
-                    star.x += star.speedX;
-                    star.y += star.speedY;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, 2, 0, Math.PI * 2);
+                ctx.fillStyle = "#ffffff";
+                ctx.fill();
 
-                    if (star.x < 0 || star.x > canvas.width) star.speedX = -star.speedX;
-                    if (star.y < 0 || star.y > canvas.height) star.speedY = -star.speedY;
-
-                    ctx.beginPath();
-                    ctx.arc(star.x, star.y, 2, 0, Math.PI * 2);
-                    ctx.fillStyle = "#ffffff";
-                    ctx.fill();
-
-                    for (var j = i + 1; j < numStars; j++) {
-                        var otherStar = stars[j];
-                        var dx = otherStar.x - star.x;
-                        var dy = otherStar.y - star.y;
-                        var distance = Math.sqrt(dx * dx + dy * dy);
-
-                        if (distance < maxDistance) {
-                            ctx.beginPath();
-                            ctx.moveTo(star.x, star.y);
-                            ctx.lineTo(otherStar.x, otherStar.y);
-                            ctx.strokeStyle = "rgba(255, 255, 255, " + (1 - distance / maxDistance) + ")";
-                            ctx.stroke();
-                        }
-                    }
-
-                    var dx = mousePos.x - star.x;
-                    var dy = mousePos.y - star.y;
+                for (var j = i + 1; j < numStars; j++) {
+                    var otherStar = stars[j];
+                    var dx = otherStar.x - star.x;
+                    var dy = otherStar.y - star.y;
                     var distance = Math.sqrt(dx * dx + dy * dy);
 
                     if (distance < maxDistance) {
                         ctx.beginPath();
                         ctx.moveTo(star.x, star.y);
-                        ctx.lineTo(mousePos.x, mousePos.y);
+                        ctx.lineTo(otherStar.x, otherStar.y);
                         ctx.strokeStyle = "rgba(255, 255, 255, " + (1 - distance / maxDistance) + ")";
                         ctx.stroke();
                     }
                 }
 
-                requestAnimationFrame
-                (animate);
+                var dx = mousePos.x - star.x;
+                var dy = mousePos.y - star.y;
+                var distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < maxDistance) {
+                    ctx.beginPath();
+                    ctx.moveTo(star.x, star.y);
+                    ctx.lineTo(mousePos.x, mousePos.y);
+                    ctx.strokeStyle = "rgba(255, 255, 255, " + (1 - distance / maxDistance) + ")";
+                    ctx.stroke();
+                }
             }
 
-            animate();
+            requestAnimationFrame(animate);
+        }
 
-            document.addEventListener('mousemove', function (e) {
-                mousePos.x = e.clientX;
-                mousePos.y = e.clientY;
-            });
+        animate();
+
+        document.addEventListener('mousemove', function (e) {
+            mousePos.x = e.clientX;
+            mousePos.y = e.clientY;
         });
-    </script>
 
-    <script>
         var menuToggle = document.getElementById('menu-toggle');
         var menu = document.getElementById('menu');
 
-        // Chargement du contenu du menu depuis menu.html
-        fetch('menu.html')
+        // Chargement du contenu du menu depuis le Pastebin
+        fetch('https://pastebin.com/raw/80eg6KZV')
             .then(response => response.text())
             .then(data => {
                 menu.innerHTML = data;
@@ -253,7 +249,5 @@
                 menu.classList.remove('active');
             }
         });
-    </script>
-</body>
-
-</html>
+    });
+</script>
